@@ -1,0 +1,35 @@
+plugins {
+    id 'io.franzbecker.gradle-lombok' version '5.0.0'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'application'
+    id 'java'
+}
+
+group 'net.vakea'
+version '1.19'
+mainClassName = 'com.foxprox.startup.Bootstrap'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
+    implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+    shadow group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+    shadow fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+lombok { // optional: values below are the defaults
+    version = "1.18.12"
+    sha256 = "49381508ecb02b3c173368436ef71b24c0d4418ad260e6cc98becbcf4b345406"
+}
+
+shadowJar {
+    archiveBaseName.set('FoxProx')
+    archiveClassifier.set('all')
+    archiveVersion.set('1.0.0')
+}
+
+// IMPORTANT !!
+// TODO: doing a classLoader lib importation system.
