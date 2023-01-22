@@ -84,7 +84,7 @@ public class ServerConnector extends PacketHandler
 
         this.handshakeHandler = new ForgeServerHandler( user, ch, target );
         Handshake originalHandshake = user.getPendingConnection().getHandshake();
-        Handshake copiedHandshake = new Handshake( originalHandshake.getProtocolVersion(), originalHandshake.getHost(), originalHandshake.getPort(), 2 , originalHandshake.isMerlin(), originalHandshake.getClientId(), originalHandshake.getClientState());
+        Handshake copiedHandshake = new Handshake( originalHandshake.getProtocolVersion(), originalHandshake.getHost(), originalHandshake.getPort(), 2);
 
         if ( FoxProx.getInstance().config.isIpForward() && user.getSocketAddress() instanceof InetSocketAddress )
         {

@@ -1,5 +1,6 @@
 package com.foxprox.network.proxy.networking.connection;
 
+import com.foxprox.logger.api.Colours;
 import com.foxprox.logger.api.Level;
 import com.foxprox.network.proxy.core.api.*;
 import com.foxprox.network.proxy.core.api.chat.BaseComponent;
@@ -12,6 +13,7 @@ import com.foxprox.network.proxy.jni.cipher.BungeeCipher;
 import com.foxprox.network.proxy.core.netty.cipher.CipherDecoder;
 import com.foxprox.network.proxy.core.netty.cipher.CipherEncoder;
 import com.foxprox.network.proxy.lib.utils.UUIDUtils;
+import com.foxprox.network.proxy.networking.managers.MerlinHandler;
 import com.foxprox.network.proxy.networking.protocol.packet.EncryptionRequest;
 import com.foxprox.network.proxy.networking.protocol.packet.PluginMessage;
 import com.google.common.base.Charsets;
@@ -405,7 +407,7 @@ public class InitialHandler extends PacketHandler implements PendingConnection
                 // FlameCord - Option to log initialhandler
                 if ( bungee.getConfig().isLogPings())
                 {
-                    bungee.getLogger().log( Level.INFO, "{0} has pinged", this );
+                    bungee.getLogger().info(this + " has pinged.");
                 }
                 thisState = State.STATUS;
                 ch.setProtocol( Protocol.STATUS );
@@ -416,11 +418,12 @@ public class InitialHandler extends PacketHandler implements PendingConnection
                 // FlameCord - Option to log initialhandler
                 if (FoxProx.getInstance().getConfig().isLogInitialHandlerConnections() ) // Waterfall
                 {
-                    bungee.getLogger().log( Level.INFO, "{0} has connected", this );
+                    bungee.getLogger().info(this + " has connected.");
                 }
                 thisState = State.USERNAME;
                 ch.setProtocol( Protocol.LOGIN );
                 // TODO: Initial handler extension
+                MerlinHandler.handle(this, handshake);
                 break;
             default:
                 throw new QuietException( "Cannot request protocol " + handshake.getRequestedProtocol() );

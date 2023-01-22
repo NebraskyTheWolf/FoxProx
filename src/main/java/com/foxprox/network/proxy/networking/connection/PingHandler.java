@@ -44,7 +44,7 @@ public class PingHandler extends PacketHandler
         channel.getHandle().pipeline().addAfter( PipelineUtils.FRAME_DECODER, PipelineUtils.PACKET_DECODER, new MinecraftDecoder( Protocol.STATUS, false, FoxServer.getInstance().getProtocolVersion() ) );
         channel.getHandle().pipeline().addAfter( PipelineUtils.FRAME_PREPENDER, PipelineUtils.PACKET_ENCODER, encoder );
 
-        channel.write( new Handshake( protocol, target.getAddress().getHostString(), target.getAddress().getPort(), 1, false, UUID.randomUUID(), "") );
+        channel.write( new Handshake( protocol, target.getAddress().getHostString(), target.getAddress().getPort(), 1) );
 
         encoder.setProtocol( Protocol.STATUS );
         channel.write( new StatusRequest() );

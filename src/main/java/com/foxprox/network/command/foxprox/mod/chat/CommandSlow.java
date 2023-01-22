@@ -11,11 +11,9 @@ public class CommandSlow extends AbstractCommand {
 
     @Override
     protected void onCommand(CommandSender sender, String[] args) {
-        if (!hasPermission(sender, "mod.kick")) {
+        if (!hasPermission(sender, "mod.slow")) {
             this.sendError(sender, "You don't have the permission to execute this command.");
             return;
         }
-
-
     }
 }

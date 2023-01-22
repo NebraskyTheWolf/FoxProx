@@ -23,10 +23,6 @@ public class Handshake extends DefinedPacket
     private String host;
     private int port;
     private int requestedProtocol;
-    private boolean isMerlin;
-    private UUID clientId;
-    private String clientState;
-
     @Override
     public void read(ByteBuf buf)
     {
@@ -34,14 +30,6 @@ public class Handshake extends DefinedPacket
         this.host = readString( buf, 255 );
         this.port = buf.readUnsignedShort();
         this.requestedProtocol = readVarInt( buf );
-
-        // Merlin client handshake
-
-        if (protocolVersion >= ProtocolConstants.MERLIN_CLIENT) {
-            this.isMerlin = buf.readBoolean();
-            this.clientId = readUUID( buf );
-            this.clientState = readString( buf );
-        }
     }
 
     @Override
@@ -51,14 +39,6 @@ public class Handshake extends DefinedPacket
         writeString( this.host, buf );
         buf.writeShort( this.port );
         writeVarInt( this.requestedProtocol, buf );
-
-        // Merlin Client handshake response.
-
-        if (protocolVersion >= ProtocolConstants.MERLIN_CLIENT) {
-            buf.writeBoolean( this.isMerlin );
-            writeUUID( this.clientId, buf );
-            writeString( this.clientState, buf );
-        }
     }
 
     @Override
